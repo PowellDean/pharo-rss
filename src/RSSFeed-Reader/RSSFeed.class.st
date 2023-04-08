@@ -38,9 +38,11 @@ Class {
 RSSFeed class >> elementNamed: aString inNode: aNode [
 	| value |
 	value := ((aNode elementAt: aString) ifNil: [^ '']).
+	((value nodes) isEmpty) ifTrue: [
+		^ (value attributeAt: 'href' ifAbsent: '')].
 	((value nodes) size = 1)
 		ifTrue: [ ^ value nodes at: 1 ]
-		ifFalse: [^ Error new signal: 'RSS Element expecting single node' ].
+		ifFalse: [ ^ Error new signal: 'RSS Element expecting single node' ].
 ]
 
 { #category : #'instance creation' }
